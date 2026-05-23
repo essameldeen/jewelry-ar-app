@@ -27,7 +27,6 @@ class MainActivity : ComponentActivity() {
     private val productViewModel: ProductViewModel by viewModels {
         ProductViewModelFactory(this)
     }
-
     private val arViewModel: ARViewModel by viewModels()
 
     private val cameraPermissionLauncher = registerForActivityResult(
@@ -38,9 +37,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Request camera permission
         requestCameraPermission()
+
         setContent {
             KmmJewelryARTheme {
                 Surface(
@@ -48,26 +46,34 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val currentScreen = remember { mutableStateOf<Screen>(Screen.ProductList) }
+                    val isArabic = LanguageManager.isArabic.collectAsState().value
 
                     when (currentScreen.value) {
                         Screen.ProductList -> {
                             val uiState = productViewModel.uiState.collectAsState().value
                             ProductListScreen(
                                 uiState = uiState,
+                                isArabic = isArabic,
                                 onCategorySelected = { productViewModel.setCategory(it) },
+                                onProductClick = { product ->
+                                    arViewModel.setProduct(product)
+                                    currentScreen.value = Screen.AR
+                                },
                                 onTryOn = { product ->
                                     arViewModel.setProduct(product)
                                     currentScreen.value = Screen.AR
-                                }
+                                },
+                                onToggleLanguage = { LanguageManager.toggle() }
                             )
                         }
                         Screen.AR -> {
                             val arState = arViewModel.uiState.collectAsState().value
                             CameraARScreen(
                                 uiState = arState,
+                                isArabic = isArabic,
                                 onHandDetected = { arViewModel.updateHandLandmarks(it) },
-                                onBackClick = { currentScreen.value = Screen.ProductList },
-                                onRingStyleChange = { arViewModel.setRingStyle(it) }
+                                onPoseDetected = { arViewModel.updatePoseLandmarks(it) },
+                                onBackClick = { currentScreen.value = Screen.ProductList }
                             )
                         }
                     }
@@ -77,21 +83,14 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun requestCameraPermission() {
-        when {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                arViewModel.setCameraPermission(true)
-            }
-            else -> {
-                cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
-            }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            arViewModel.setCameraPermission(true)
+        } else {
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
         }
     }
 }
 
-enum class Screen {
-    ProductList,
-    AR
-}
+enum class Screen { ProductList, AR }
