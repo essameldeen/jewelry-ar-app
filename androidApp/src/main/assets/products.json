@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "name": "Classic Gold Band",
+    "category": "ring",
+    "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&h=400&fit=crop",
+    "overlay": "ring1_overlay.png",
+    "price": 499.0,
+    "description": "A timeless gold band, perfect for everyday elegance."
+  },
+  {
+    "id": "2",
+    "name": "Silver Solitaire",
+    "category": "ring",
+    "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=400&fit=crop",
+    "overlay": "ring2_overlay.png",
+    "price": 299.0,
+    "description": "Sleek silver ring with a single sparkling stone."
+  },
+  {
+    "id": "3",
+    "name": "Rose Gold Twist",
+    "category": "ring",
+    "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=400&h=400&fit=crop",
+    "overlay": "ring3_overlay.png",
+    "price": 599.0,
+    "description": "Modern rose gold ring with a delicate twist design."
+  },
+  {
+    "id": "4",
+    "name": "Diamond Halo",
+    "category": "ring",
+    "image": "https://images.unsplash.com/photo-1515562141207-6811bcdd56cd?w=400&h=400&fit=crop",
+    "overlay": "ring4_overlay.png",
+    "price": 1299.0,
+    "description": "Brilliant diamond surrounded by a halo of accents."
+  }
+]

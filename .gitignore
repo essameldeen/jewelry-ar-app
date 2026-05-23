@@ -1,0 +1,31 @@
+# Android / Gradle
+build/
+.gradle/
+*.iml
+local.properties
+.idea/
+captures/
+*.keystore
+*.jks
+
+# Raw source images (764 MB DNG files — processed outputs are in webApp/public/jewelry/)
+Jew/
+
+# Node / React
+webApp/node_modules/
+webApp/dist/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Temp files
+/tmp/
+
+# Claude Code local settings
+.claude/
+webApp/.claude/
